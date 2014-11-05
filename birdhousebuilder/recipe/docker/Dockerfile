@@ -1,4 +1,4 @@
-FROM ${image-name}
+FROM ${image_name}:${image_version}
 MAINTAINER ${maintainer}
 
 # Add user phoenix
