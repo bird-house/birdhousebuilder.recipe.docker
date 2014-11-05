@@ -1,5 +1,5 @@
-FROM ubuntu:14.04
-MAINTAINER Carsten Ehbrecht <ehbrecht@dkrz.de>
+FROM ${image-name}
+MAINTAINER ${maintainer}
 
 # Add user phoenix
 RUN useradd -d /home/phoenix -m phoenix
