@@ -26,7 +26,7 @@ WORKDIR /home/phoenix/src
 USER phoenix
 
 # Update makefile and run install
-RUN bash bootstrap.sh -u && make clean build
+RUN bash bootstrap.sh -u && make clean install 
 
 # cd into anaconda
 WORKDIR /home/phoenix/anaconda
