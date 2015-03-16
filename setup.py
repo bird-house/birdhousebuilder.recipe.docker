@@ -5,7 +5,7 @@ This module contains the tool of birdhousebuilder.recipe.docker
 from setuptools import find_packages
 from setuptools import setup
 
-version = '0.1.1'
+version = '0.2.0'
 description = 'A Buildout recipe to generate a Dockerfile for Birdhouse applications.'
 long_description = (
     open('README.rst').read() + '\n' +
@@ -36,8 +36,7 @@ setup(name='birdhousebuilder.recipe.docker',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],
       keywords='buildout recipe birdhouse',
-      author='Carsten Ehbrecht',
-      author_email='ehbrecht at dkrz.de',
+      author='Birdhouse',
       url='https://github.com/bird-house/birdhousebuilder.recipe.docker',
       license='Apache License v2.0',
       packages=find_packages(exclude=['ez_setup']),
