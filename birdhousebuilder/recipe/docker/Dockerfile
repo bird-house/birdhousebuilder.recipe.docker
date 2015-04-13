@@ -1,6 +1,13 @@
 FROM ${image_name}:${image_version}
 MAINTAINER ${maintainer}
 
+% if image_name.lower() in ['centos', 'fedora']:
+# Setup sudo
+RUN yum install -y sudo
+# Don't require terminal when using sudo with root
+RUN echo 'Defaults:root !requiretty' > /etc/sudoers.d/999-birdhouse
+% endif
+
 # Add user phoenix
 RUN useradd -d /home/phoenix -m phoenix
 
