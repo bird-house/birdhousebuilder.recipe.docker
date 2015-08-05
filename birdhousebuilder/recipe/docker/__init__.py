@@ -5,8 +5,6 @@
 import os
 from mako.template import Template
 
-from birdhousebuilder.recipe import conda
-
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
 
 class Recipe(object):
@@ -15,9 +13,7 @@ class Recipe(object):
     def __init__(self, buildout, name, options):
         self.buildout, self.name, self.options = buildout, name, options
         b_options = buildout['buildout']
-
         self.buildout_dir = b_options.get('directory')
-        self.conda_channels = b_options.get('conda-channels')
         
         self.options['image-name'] = options.get('image-name', 'ubuntu')
         self.options['image-version'] = options.get('image-version', 'latest')

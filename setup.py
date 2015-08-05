@@ -47,7 +47,6 @@ setup(name='birdhousebuilder.recipe.docker',
                         'zc.buildout',
                         # -*- Extra requirements: -*-
                         'Mako',
-                        'birdhousebuilder.recipe.conda',
                         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),

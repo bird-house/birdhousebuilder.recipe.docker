@@ -4,7 +4,7 @@ Changes
 0.2.2 (2015-08-05)
 ==================
 
-* cleaned up ... removed unused anaconda_home.
+* cleaned up ... removed conda dependency.
 
 0.2.1 (2015-04-13)
 ==================
