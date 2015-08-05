@@ -5,6 +5,7 @@ Changes
 ==================
 
 * cleaned up ... removed conda dependency.
+* update to buildout 2.x.
 
 0.2.1 (2015-04-13)
 ==================
