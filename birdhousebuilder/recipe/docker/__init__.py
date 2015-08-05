@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Copyright (C)2014 DKRZ GmbH
 
 """Recipe docker"""
 
@@ -18,7 +17,6 @@ class Recipe(object):
         b_options = buildout['buildout']
 
         self.buildout_dir = b_options.get('directory')
-        self.anaconda_home = b_options.get('anaconda-home', conda.anaconda_home())
         self.conda_channels = b_options.get('conda-channels')
         
         self.options['image-name'] = options.get('image-name', 'ubuntu')

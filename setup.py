@@ -5,7 +5,7 @@ This module contains the tool of birdhousebuilder.recipe.docker
 from setuptools import find_packages
 from setuptools import setup
 
-version = '0.2.1'
+version = '0.2.2'
 description = 'A Buildout recipe to generate a Dockerfile for Birdhouse applications.'
 long_description = (
     open('README.rst').read() + '\n' +
