@@ -1,6 +1,12 @@
 Changes
 *******
 
+0.3.0 (2015-09-22)
+==================
+
+* updated Dockerfile tempalte.
+* more options added.
+
 0.2.2 (2015-08-05)
 ==================
 
