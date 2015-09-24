@@ -24,6 +24,7 @@ class Recipe(object):
         self.options['version'] = options.get('version', '1.0.0')
         self.options['http_port'] = options.get('http-port', '8094')
         self.options['https_port'] = options.get('https-port', '28094')
+        self.options['output_port'] = options.get('output-port', '8090')
 
     def install(self):
         installed = []
