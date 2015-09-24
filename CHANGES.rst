@@ -1,6 +1,12 @@
 Changes
 *******
 
+0.3.1 (2015-09-24)
+==================
+
+* updated Dockerfile template.
+* added output-port option.
+
 0.3.0 (2015-09-22)
 ==================
 
