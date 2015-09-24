@@ -9,7 +9,7 @@ ENV HOSTNAME localhost
 ENV USER www-data
 ENV OUTPUT_PORT ${output_port}
 ENV PHOENIX_PASSWORD "sha256:10761810a2f2:8535bf8468e0045ec2d33bd4d2f513d669bd31b79794614f23632c3b2cadc51c"
-ENV WPS_URL http://malleefowl:8094/wps
+ENV WPS_URL http://malleefowl:8091/wps
 
 % if image_name.lower() in ['centos', 'fedora']:
 # Setup sudo
