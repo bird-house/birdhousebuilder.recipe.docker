@@ -5,6 +5,7 @@ Changes
 ==================
 
 * fixed malleefowl default port in dockerfile template.
+* changed dockerfile volumes.
 
 0.3.1 (2015-09-24)
 ==================
