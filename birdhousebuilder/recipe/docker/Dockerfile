@@ -43,8 +43,10 @@ RUN mv $CONDA_ENVS_DIR/birdhouse/var /data && ln -s /data $CONDA_ENVS_DIR/birdho
 VOLUME /data/cache
 VOLUME /data/lib
 
+% if expose:
 # Ports used in birdhouse
 EXPOSE ${expose}
+% endif
 
 # Start supervisor in foreground
 ENV DAEMON_OPTS --nodaemon --user $USER

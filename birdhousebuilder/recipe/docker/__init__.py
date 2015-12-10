@@ -22,7 +22,7 @@ class Recipe(object):
         self.options['description'] = options.get('description', 'Birdhouse Application')
         self.options['vendor'] = options.get('vendor', 'Birdhouse')
         self.options['version'] = options.get('version', '1.0.0')
-        self.options['expose'] = [port for port in options.get('expose', '').split() if port]
+        self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         envs = [env for env in options.get('environment', '').split() if env]
         self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }
 
