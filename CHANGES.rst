@@ -1,7 +1,13 @@
 Changes
 *******
 
-0.3.2 (2015-mm-dd)
+0.4.0 (2015-12-10)
+==================
+
+* added environment and expose options.
+* enabled travis.
+
+0.3.2 (2015-09-25)
 ==================
 
 * fixed malleefowl default port in dockerfile template.
@@ -16,7 +22,7 @@ Changes
 0.3.0 (2015-09-22)
 ==================
 
-* updated Dockerfile tempalte.
+* updated Dockerfile template.
 * more options added.
 
 0.2.2 (2015-08-05)

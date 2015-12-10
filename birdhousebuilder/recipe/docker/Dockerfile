@@ -7,9 +7,9 @@ LABEL Description="${description}" Vendor="${vendor}" Version="${version}"
 # Configure hostname and user for services 
 ENV HOSTNAME localhost
 ENV USER www-data
-ENV OUTPUT_PORT ${output_port}
-ENV PHOENIX_PASSWORD "sha256:10761810a2f2:8535bf8468e0045ec2d33bd4d2f513d669bd31b79794614f23632c3b2cadc51c"
-ENV WPS_URL http://malleefowl:8091/wps
+%for key,value in environment.items():
+ENV ${key} ${value}
+% endfor 
 
 % if image_name.lower() in ['centos', 'fedora']:
 # Setup sudo
@@ -44,7 +44,7 @@ VOLUME /data/cache
 VOLUME /data/lib
 
 # Ports used in birdhouse
-EXPOSE $OUTPUT_PORT 9001 ${http_port} ${https_port}
+EXPOSE ${expose}
 
 # Start supervisor in foreground
 ENV DAEMON_OPTS --nodaemon --user $USER

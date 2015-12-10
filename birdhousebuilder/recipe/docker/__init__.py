@@ -19,12 +19,12 @@ class Recipe(object):
         self.options['image_name'] = options.get('image-name', 'birdhouse/bird-base')
         self.options['image_version'] = options.get('image-version', 'latest')
         self.options['maintainer'] = options.get('maintainer', 'https://github.com/bird-house')
-        self.options['description'] = options.get('description', 'Web Processing Service')
+        self.options['description'] = options.get('description', 'Birdhouse Application')
         self.options['vendor'] = options.get('vendor', 'Birdhouse')
         self.options['version'] = options.get('version', '1.0.0')
-        self.options['http_port'] = options.get('http-port', '8094')
-        self.options['https_port'] = options.get('https-port', '28094')
-        self.options['output_port'] = options.get('output-port', '8090')
+        self.options['expose'] = [port for port in options.get('expose', '').split() if port]
+        envs = [env for env in options.get('environment', '').split() if env]
+        self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }
 
     def install(self):
         installed = []
