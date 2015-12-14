@@ -21,11 +21,20 @@ RUN echo 'Defaults:root !requiretty' > /etc/sudoers.d/999-birdhouse
 # Set current home
 ENV HOME /root
 
-# Add application sources
-ADD . /opt/birdhouse
+% if git_url:
+# Load sources from github
+RUN mkdir -p /opt/birdhouse && curl -ksL ${git_url}/archive/${git_branch}.tar.gz | tar -xzC /opt/birdhouse --strip-components=1
+% else:
+# Copy application sources
+COPY ${source} /opt/birdhouse
+% endif
 
+% if subdir:
+WORKDIR /opt/birdhouse/${subdir}
+% else:
 # cd into application
 WORKDIR /opt/birdhouse
+% endif
 
 # Install system dependencies
 RUN bash bootstrap.sh -i && bash requirements.sh
