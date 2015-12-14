@@ -26,6 +26,7 @@ class Recipe(object):
         self.options['git_url'] = options.get('git-url')
         self.options['git_branch'] = options.get('git-branch', 'master')
         self.options['subdir'] = options.get('subdir')
+        self.options['buildout_cfg'] = options.get('buildout-cfg')
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         envs = [env for env in options.get('environment', '').split() if env]
         self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }

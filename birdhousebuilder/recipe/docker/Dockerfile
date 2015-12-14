@@ -36,6 +36,11 @@ WORKDIR /opt/birdhouse/${subdir}
 WORKDIR /opt/birdhouse
 % endif
 
+% if buildout_cfg:
+# Overwrite buildout.cfg in source folder
+COPY ${buildout_cfg} buildout.cfg
+% endif
+
 # Install system dependencies
 RUN bash bootstrap.sh -i && bash requirements.sh
 
