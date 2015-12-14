@@ -45,6 +45,21 @@ This recipe supports the following options:
 **version**
    The version of the application. Default: 1.0.0
 
+**source**
+   Location of the source folder copied into the image. This option is not used it ``git-url`` is present. Default is ``.``.
+
+**git-url**
+   GitHub URL pointing to the source repo. The sources are copied into the image. Default: None.
+
+**git-branch**
+   Branch of the source repo on GitHub. Default: ``master``.
+
+**subdir**
+  The location of the ``buildout.cfg`` file used to build. Default: None. 
+   
+**buildout-cfg**
+  Path to a local ``buildout.cfg`` which is copied into the sources. Default: None.  
+
 **expose**
    List of exposed ports.
 

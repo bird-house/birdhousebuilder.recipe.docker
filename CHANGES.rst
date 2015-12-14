@@ -1,6 +1,11 @@
 Changes
 *******
 
+0.4.2 (2015-12-14)
+==================
+
+* added git-url, git-branch, subdir and buildout-cfg options.
+
 0.4.1 (2015-12-10)
 ==================
 
