@@ -64,8 +64,10 @@ This recipe supports the following options:
    List of exposed ports.
 
 **environment**
-   List of KEY=value pairs added as ENV parameters in the Dockerfile.
+   List of key=value pairs added as ENV parameters in the Dockerfile.
 
+**settings**
+   List of key=value pairs to generate a custom.cfg used in the Dockerfile.
 
 Example usage
 =============

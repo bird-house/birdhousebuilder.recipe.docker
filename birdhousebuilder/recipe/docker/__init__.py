@@ -6,6 +6,7 @@ import os
 from mako.template import Template
 
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
+templ_custom_cfg = Template(filename=os.path.join(os.path.dirname(__file__), "custom.cfg"))
 
 class Recipe(object):
     """Buildout recipe to generate a Dockerfile."""
@@ -30,15 +31,32 @@ class Recipe(object):
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         envs = [env for env in options.get('environment', '').split() if env]
         self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }
+        settings = [setting for setting in options.get('settings', '').split() if setting]
+        self.options['settings'] = {k:v for k,v in (setting.split('=') for setting in settings) }
 
     def install(self):
         installed = []
         installed += list(self.install_dockerfile())
+        installed += list(self.install_custom_cfg())
         return installed
 
     def install_dockerfile(self):
         result = templ_dockerfile.render(**self.options)
         output = os.path.join(self.buildout_dir, 'Dockerfile')
+        
+        try:
+            os.remove(output)
+        except OSError:
+            pass
+
+        with open(output, 'wt') as fp:
+            fp.write(result)
+            os.chmod(output, 0o644)
+        return [output]
+
+    def install_custom_cfg(self):
+        result = templ_custom_cfg.render(**self.options)
+        output = os.path.join(self.buildout_dir, 'docker.cfg')
         
         try:
             os.remove(output)

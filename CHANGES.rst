@@ -1,6 +1,11 @@
 Changes
 *******
 
+0.4.3 (2015-12-15)
+==================
+
+* added settings option to generate a custom.cfg for docker image.
+
 0.4.2 (2015-12-14)
 ==================
 
@@ -54,8 +59,7 @@ Changes
 0.1.1 (2014-11-13)
 ==================
 
-* Updated Dockerfile template
-starts only supervisord.
+* Updated Dockerfile template ... starts only supervisord.
 * Fixed example in Readme.
 
 0.1.0 (2014-11-05)
