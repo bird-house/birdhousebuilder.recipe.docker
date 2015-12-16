@@ -3,8 +3,14 @@
 """Recipe docker"""
 
 import os
+import shlex
+import shutil
 from mako.template import Template
 
+import logging
+logger = logging.getLogger(__name__)
+
+templ_dockerignore = Template(filename=os.path.join(os.path.dirname(__file__), "dot_dockerignore"))
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
 templ_custom_cfg = Template(filename=os.path.join(os.path.dirname(__file__), "custom.cfg"))
 
@@ -28,6 +34,7 @@ class Recipe(object):
         self.options['git_branch'] = options.get('git-branch', 'master')
         self.options['subdir'] = options.get('subdir')
         self.options['buildout_cfg'] = options.get('buildout-cfg')
+        self.options['command'] = str( shlex.split( options.get('command', 'make update-config start') ) )
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         envs = [env for env in options.get('environment', '').split() if env]
         self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }
@@ -36,10 +43,25 @@ class Recipe(object):
 
     def install(self):
         installed = []
+        installed += list(self.install_dockerignore())
         installed += list(self.install_dockerfile())
         installed += list(self.install_custom_cfg())
         return installed
 
+    def install_dockerignore(self):
+        result = templ_dockerignore.render(**self.options)
+        output = os.path.join(self.buildout_dir, '.dockerignore')
+        
+        try:
+            os.remove(output)
+        except OSError:
+            pass
+
+        with open(output, 'wt') as fp:
+            fp.write(result)
+            os.chmod(output, 0o644)
+        return tuple()
+    
     def install_dockerfile(self):
         result = templ_dockerfile.render(**self.options)
         output = os.path.join(self.buildout_dir, 'Dockerfile')
@@ -52,11 +74,11 @@ class Recipe(object):
         with open(output, 'wt') as fp:
             fp.write(result)
             os.chmod(output, 0o644)
-        return [output]
+        return tuple()
 
     def install_custom_cfg(self):
         result = templ_custom_cfg.render(**self.options)
-        output = os.path.join(self.buildout_dir, 'docker.cfg')
+        output = os.path.join(self.buildout_dir, '.docker.cfg')
         
         try:
             os.remove(output)

@@ -43,7 +43,7 @@ COPY ${buildout_cfg} buildout.cfg
 
 % if len(settings.items()) > 0:
 # Provide custom.cfg with settings for docker image
-COPY docker.cfg custom.cfg
+COPY .docker.cfg custom.cfg
 % endif
 
 # Install system dependencies
@@ -70,6 +70,6 @@ EXPOSE ${expose}
 # Start supervisor in foreground
 ENV DAEMON_OPTS --nodaemon --user $USER
 
-# Update config and start supervisor ...
-CMD ["make", "update-config", "start"]
+# Start service ...
+CMD ${command}
 
