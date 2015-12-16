@@ -63,6 +63,9 @@ This recipe supports the following options:
 **expose**
    List of exposed ports.
 
+**command**
+   Command to start service. Default: ``make update-config start``
+
 **environment**
    List of key=value pairs added as ENV parameters in the Dockerfile.
 

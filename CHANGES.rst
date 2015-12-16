@@ -1,6 +1,13 @@
 Changes
 *******
 
+0.4.4 (2015-12-16)
+==================
+
+* added ``command`` option.
+* custom.cfg for docker is copied to ``.docker.cfg``.
+* added ``.dockerignore`` file.
+
 0.4.3 (2015-12-15)
 ==================
 
