@@ -14,6 +14,13 @@ templ_dockerignore = Template(filename=os.path.join(os.path.dirname(__file__), "
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
 templ_custom_cfg = Template(filename=os.path.join(os.path.dirname(__file__), "custom.cfg"))
 
+def command_to_yaml(command):
+    mylist = shlex.split( command )
+    cmd = ', '.join( ['"%s"' % el for el in mylist] )
+    cmd = '[%s]' % cmd
+    return cmd
+
+
 class Recipe(object):
     """Buildout recipe to generate a Dockerfile."""
 
@@ -34,7 +41,7 @@ class Recipe(object):
         self.options['git_branch'] = options.get('git-branch', 'master')
         self.options['subdir'] = options.get('subdir')
         self.options['buildout_cfg'] = options.get('buildout-cfg')
-        self.options['command'] = str( shlex.split( options.get('command', 'make update-config start') ) )
+        self.options['command'] = command_to_yaml( options.get('command', 'make update-config start') )
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         envs = [env for env in options.get('environment', '').split() if env]
         self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }
