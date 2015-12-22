@@ -1,6 +1,11 @@
 Changes
 *******
 
+0.4.6 (2015-12-22)
+==================
+
+* using only volume /data for /var/lib in Dockerfile.
+
 0.4.5 (2015-12-17)
 ==================
 

@@ -58,9 +58,8 @@ RUN make clean install
 
 # Volume for data, cache, logfiles, ...
 RUN chown -R $USER $CONDA_ENVS_DIR/birdhouse
-RUN mv $CONDA_ENVS_DIR/birdhouse/var /data && ln -s /data $CONDA_ENVS_DIR/birdhouse/var
-VOLUME /data/cache
-VOLUME /data/lib
+RUN mkdir /data && mv $CONDA_ENVS_DIR/birdhouse/var/lib /data && ln -s /data/lib $CONDA_ENVS_DIR/birdhouse/var
+VOLUME /data
 
 % if expose:
 # Ports used in birdhouse
