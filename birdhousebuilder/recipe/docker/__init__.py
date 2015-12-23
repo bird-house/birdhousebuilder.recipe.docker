@@ -50,10 +50,10 @@ class Recipe(object):
 
         self.options['buildout_options'] = {'supervisor-host': '*', 'supervisor-port': '9001'}
         opts = [opt for opt in options.get('buildout-options', '').split() if opt]
-        self.options['buildout_options'].update( {k.split():v.split() for k,v in (opt.split('=') for opt in opts) } )
+        self.options['buildout_options'].update( {k.strip():v.strip() for k,v in (opt.split('=') for opt in opts) } )
         
         settings = [setting for setting in options.get('settings', '').split() if setting]
-        self.options['settings'] = {k.split():v.split() for k,v in (setting.split('=') for setting in settings) }
+        self.options['settings'] = {k.strip():v.strip() for k,v in (setting.split('=') for setting in settings) }
 
     def install(self):
         installed = []
