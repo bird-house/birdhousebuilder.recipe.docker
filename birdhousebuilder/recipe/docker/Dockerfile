@@ -39,10 +39,8 @@ WORKDIR /opt/birdhouse
 COPY ${buildout_cfg} buildout.cfg
 % endif
 
-% if len(settings.items()) > 0:
 # Provide custom.cfg with settings for docker image
 COPY .docker.cfg custom.cfg
-% endif
 
 # Install system dependencies
 RUN bash bootstrap.sh -i && bash requirements.sh

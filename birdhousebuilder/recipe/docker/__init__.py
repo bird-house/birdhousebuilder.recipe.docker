@@ -41,15 +41,19 @@ class Recipe(object):
         self.options['git_branch'] = options.get('git-branch', 'master')
         self.options['subdir'] = options.get('subdir')
         self.options['buildout_cfg'] = options.get('buildout-cfg')
-        self.options['command'] = command_to_yaml( options.get('command', 'make update-config start') )
+        self.options['command'] = command_to_yaml( options.get('command', 'make update-config update-user start') )
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         self.options['environment'] = {'HOSTNAME': 'localhost', 'USER': 'www-data'}
         envs = [env for env in options.get('environment', '').split() if env]
         opt_env = {k.strip().upper():v.strip() for k,v in (env.split('=') for env in envs) }
         self.options['environment'].update( opt_env )
+
+        self.options['buildout_options'] = {'supervisor-host': '*', 'supervisor-port': '9001'}
+        opts = [opt for opt in options.get('buildout-options', '').split() if opt]
+        self.options['buildout_options'].update( {k.split():v.split() for k,v in (opt.split('=') for opt in opts) } )
         
         settings = [setting for setting in options.get('settings', '').split() if setting]
-        self.options['settings'] = {k:v for k,v in (setting.split('=') for setting in settings) }
+        self.options['settings'] = {k.split():v.split() for k,v in (setting.split('=') for setting in settings) }
 
     def install(self):
         installed = []
