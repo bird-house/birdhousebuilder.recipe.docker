@@ -28,7 +28,7 @@ Supported options
 This recipe supports the following options:
 
 **image-name**
-   The docker base image name. Default is ``ubuntu``.
+   The docker base image name. Default is ``birdhouse/bird-base``.
 
 **image-version**
    The docker base image version. Default is ``latest``.
@@ -46,7 +46,7 @@ This recipe supports the following options:
    The version of the application. Default: 1.0.0
 
 **source**
-   Location of the source folder copied into the image. This option is not used it ``git-url`` is present. Default is ``.``.
+   Location of the source folder copied into the image. This option is not used it ``git-url`` is present. Default is ".".
 
 **git-url**
    GitHub URL pointing to the source repo. The sources are copied into the image. Default: None.
