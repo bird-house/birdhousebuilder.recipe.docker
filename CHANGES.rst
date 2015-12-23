@@ -1,6 +1,14 @@
 Changes
 *******
 
+0.4.7 (2015-12-23)
+==================
+
+* fixed /data volume permissions.
+* added update-user as default command.
+* add buildout-options for docker.cfg.
+* added default envs hostname and user.
+
 0.4.6 (2015-12-22)
 ==================
 
