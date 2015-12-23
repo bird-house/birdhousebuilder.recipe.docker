@@ -1,6 +1,12 @@
 Changes
 *******
 
+0.4.8 (2015-12-23)
+==================
+
+* update readme.
+* fixed settings and buildout-options.
+
 0.4.7 (2015-12-23)
 ==================
 
