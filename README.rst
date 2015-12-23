@@ -64,13 +64,16 @@ This recipe supports the following options:
    List of exposed ports.
 
 **command**
-   Command to start service. Default: ``make update-config start``
+   Command to start service. Default: ``make update-config update-user start``
 
 **environment**
    List of key=value pairs added as ENV parameters in the Dockerfile.
 
 **settings**
-   List of key=value pairs to generate a custom.cfg used in the Dockerfile.
+   List of key=value pairs added to the buildout ``[settings]`` section of a custom.cfg used in the Dockerfile.
+
+**buildout-options**
+   List of key=value pairs added to the ``[buildout]`` section of a custom.cfg used in the Dockerfile.
 
 Example usage
 =============
@@ -90,7 +93,6 @@ The following example ``buildout.cfg`` generates a Dockerfile for Ubuntu 14.04:
   description = My Birdhouse App
   expose = 8090 8094
   environment =
-       MY_DATA_DIR=/opt/data
        OUTPUT_PORT=8090
 
 
