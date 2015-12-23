@@ -43,8 +43,11 @@ class Recipe(object):
         self.options['buildout_cfg'] = options.get('buildout-cfg')
         self.options['command'] = command_to_yaml( options.get('command', 'make update-config start') )
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
+        self.options['environment'] = {'HOSTNAME': 'localhost', 'USER': 'www-data'}
         envs = [env for env in options.get('environment', '').split() if env]
-        self.options['environment'] = {k:v for k,v in (env.split('=') for env in envs) }
+        opt_env = {k.strip().upper():v.strip() for k,v in (env.split('=') for env in envs) }
+        self.options['environment'].update( opt_env )
+        
         settings = [setting for setting in options.get('settings', '').split() if setting]
         self.options['settings'] = {k:v for k,v in (setting.split('=') for setting in settings) }
 

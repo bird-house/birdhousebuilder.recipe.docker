@@ -5,8 +5,6 @@ MAINTAINER ${maintainer}
 LABEL Description="${description}" Vendor="${vendor}" Version="${version}"
 
 # Configure hostname and user for services 
-ENV HOSTNAME localhost
-ENV USER www-data
 %for key,value in environment.items():
 ENV ${key} ${value}
 % endfor 
@@ -58,8 +56,8 @@ RUN make clean install
 
 # Volume for data, cache, logfiles, ...
 RUN chown -R $USER $CONDA_ENVS_DIR/birdhouse
-RUN mkdir /data
-RUN mkdir -p $CONDA_ENVS_DIR/birdhouse/var/lib && mv $CONDA_ENVS_DIR/birdhouse/var/lib /data && ln -s /data/lib $CONDA_ENVS_DIR/birdhouse/var
+RUN mkdir -p $CONDA_ENVS_DIR/birdhouse/var/lib && mv $CONDA_ENVS_DIR/birdhouse/var/lib /data && ln -s /data $CONDA_ENVS_DIR/birdhouse/var/lib
+RUN chown -R $USER /data
 VOLUME /data
 
 % if expose:
