@@ -14,9 +14,10 @@ templ_dockerignore = Template(filename=os.path.join(os.path.dirname(__file__), "
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
 templ_custom_cfg = Template(filename=os.path.join(os.path.dirname(__file__), "custom.cfg"))
 
+
 def command_to_yaml(command):
-    mylist = shlex.split( command )
-    cmd = ', '.join( ['"%s"' % el for el in mylist] )
+    mylist = shlex.split(command)
+    cmd = ', '.join(['"%s"' % el for el in mylist])
     cmd = '[%s]' % cmd
     return cmd
 
@@ -41,31 +42,31 @@ class Recipe(object):
         self.options['git_branch'] = options.get('git-branch', 'master')
         self.options['subdir'] = options.get('subdir')
         self.options['buildout_cfg'] = options.get('buildout-cfg')
-        self.options['command'] = command_to_yaml( options.get('command', 'make update-config update-user start') )
+        self.options['command'] = command_to_yaml(options.get('command', 'make update-config update-user start'))
         self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
         self.options['environment'] = {'HOSTNAME': 'localhost', 'USER': 'www-data'}
         envs = [env for env in options.get('environment', '').split() if env]
-        opt_env = {k.strip().upper():v.strip() for k,v in (env.split('=') for env in envs) }
-        self.options['environment'].update( opt_env )
+        opt_env = {k.strip().upper(): v.strip() for k, v in (env.split('=') for env in envs)}
+        self.options['environment'].update(opt_env)
 
         self.options['buildout_options'] = {'supervisor-host': '*', 'supervisor-port': '9001'}
         opts = [opt for opt in options.get('buildout-options', '').split() if opt]
-        self.options['buildout_options'].update( {k.strip():v.strip() for k,v in (opt.split('=') for opt in opts) } )
-        
+        self.options['buildout_options'].update({k.strip(): v.strip() for k, v in (opt.split('=') for opt in opts)})
+
         settings = [setting for setting in options.get('settings', '').split() if setting]
-        self.options['settings'] = {k.strip():v.strip() for k,v in (setting.split('=') for setting in settings) }
+        self.options['settings'] = {k.strip(): v.strip() for k, v in (setting.split('=') for setting in settings)}
 
     def install(self):
         installed = []
         installed += list(self.install_dockerignore())
         installed += list(self.install_dockerfile())
-        installed += list(self.install_custom_cfg())
+        # installed += list(self.install_custom_cfg())
         return installed
 
     def install_dockerignore(self):
         result = templ_dockerignore.render(**self.options)
         output = os.path.join(self.buildout_dir, '.dockerignore')
-        
+
         try:
             os.remove(output)
         except OSError:
@@ -75,11 +76,11 @@ class Recipe(object):
             fp.write(result)
             os.chmod(output, 0o644)
         return tuple()
-    
+
     def install_dockerfile(self):
         result = templ_dockerfile.render(**self.options)
         output = os.path.join(self.buildout_dir, 'Dockerfile')
-        
+
         try:
             os.remove(output)
         except OSError:
@@ -93,7 +94,7 @@ class Recipe(object):
     def install_custom_cfg(self):
         result = templ_custom_cfg.render(**self.options)
         output = os.path.join(self.buildout_dir, '.docker.cfg')
-        
+
         try:
             os.remove(output)
         except OSError:
@@ -107,6 +108,6 @@ class Recipe(object):
     def update(self):
         return self.install()
 
+
 def uninstall(name, options):
     pass
-
