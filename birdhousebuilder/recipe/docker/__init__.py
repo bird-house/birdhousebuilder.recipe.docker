@@ -3,8 +3,6 @@
 """Recipe docker"""
 
 import os
-import shlex
-import shutil
 from mako.template import Template
 
 import logging
@@ -12,55 +10,30 @@ logger = logging.getLogger(__name__)
 
 templ_dockerignore = Template(filename=os.path.join(os.path.dirname(__file__), "dot_dockerignore"))
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
-templ_custom_cfg = Template(filename=os.path.join(os.path.dirname(__file__), "custom.cfg"))
-
-
-def command_to_yaml(command):
-    mylist = shlex.split(command)
-    cmd = ', '.join(['"%s"' % el for el in mylist])
-    cmd = '[%s]' % cmd
-    return cmd
 
 
 class Recipe(object):
     """Buildout recipe to generate a Dockerfile."""
 
     def __init__(self, buildout, name, options):
-        self.buildout, self.name = buildout, name
+        self.buildout, self.options, self.name = buildout, options, name
         b_options = buildout['buildout']
         self.buildout_dir = b_options.get('directory')
 
-        self.options = dict()
-        self.options['image_name'] = options.get('image-name', 'birdhouse/bird-base')
-        self.options['image_version'] = options.get('image-version', 'latest')
+        self.options['app'] = options.get('app', 'birdhouse')
         self.options['maintainer'] = options.get('maintainer', 'https://github.com/bird-house')
-        self.options['description'] = options.get('description', 'Birdhouse Application')
+        self.options['description'] = options.get('description', self.options['app'] + ' application')
         self.options['vendor'] = options.get('vendor', 'Birdhouse')
         self.options['version'] = options.get('version', '1.0.0')
-        self.options['source'] = options.get('source', '.')
-        self.options['git_url'] = options.get('git-url')
-        self.options['git_branch'] = options.get('git-branch', 'master')
-        self.options['subdir'] = options.get('subdir')
-        self.options['buildout_cfg'] = options.get('buildout-cfg')
-        self.options['command'] = command_to_yaml(options.get('command', 'make update-config update-user start'))
-        self.options['expose'] = ' '.join([port for port in options.get('expose', '').split() if port])
-        self.options['environment'] = {'HOSTNAME': 'localhost', 'USER': 'www-data'}
-        envs = [env for env in options.get('environment', '').split() if env]
-        opt_env = {k.strip().upper(): v.strip() for k, v in (env.split('=') for env in envs)}
-        self.options['environment'].update(opt_env)
-
-        self.options['buildout_options'] = {'supervisor-host': '*', 'supervisor-port': '9001'}
-        opts = [opt for opt in options.get('buildout-options', '').split() if opt]
-        self.options['buildout_options'].update({k.strip(): v.strip() for k, v in (opt.split('=') for opt in opts)})
-
-        settings = [setting for setting in options.get('settings', '').split() if setting]
-        self.options['settings'] = {k.strip(): v.strip() for k, v in (setting.split('=') for setting in settings)}
+        self.options['hostname'] = options.get('hostname', 'localhost')
+        self.options['http_port'] = self.options['http-port'] = options.get('http-port', '8094')
+        self.options['https_port'] = self.options['https-port'] = options.get('https-port', '28094')
+        self.options['output_port'] = self.options['output-port'] = options.get('output-port', '38094')
 
     def install(self):
         installed = []
         installed += list(self.install_dockerignore())
         installed += list(self.install_dockerfile())
-        # installed += list(self.install_custom_cfg())
         return installed
 
     def install_dockerignore(self):
@@ -91,22 +64,7 @@ class Recipe(object):
             os.chmod(output, 0o644)
         return tuple()
 
-    def install_custom_cfg(self):
-        result = templ_custom_cfg.render(**self.options)
-        output = os.path.join(self.buildout_dir, '.docker.cfg')
-
-        try:
-            os.remove(output)
-        except OSError:
-            pass
-
-        with open(output, 'wt') as fp:
-            fp.write(result)
-            os.chmod(output, 0o644)
-        return [output]
-
-    def update(self):
-        return self.install()
+    update = install
 
 
 def uninstall(name, options):
