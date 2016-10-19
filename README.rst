@@ -6,8 +6,6 @@ birdhousebuilder.recipe.docker
    :target: https://travis-ci.org/bird-house/birdhousebuilder.recipe.docker
    :alt: Travis Build
 
-.. contents::
-
 Introduction
 ************
 
@@ -20,18 +18,15 @@ Introduction
 Usage
 *****
 
-The recipe will generate a Dockerfile for your application. You can find the Dockerfile in the root folder of the application. 
+The recipe will generate a Dockerfile for your Birdhouse application. You can find the Dockerfile in the root folder of the application.
 
 Supported options
 =================
 
 This recipe supports the following options:
 
-**image-name**
-   The docker base image name. Default is ``birdhouse/bird-base``.
-
-**image-version**
-   The docker base image version. Default is ``latest``.
+**app**
+   The name of your application. Default: birdhouse
 
 **maintainer**
    The maintainer of the Dockerfile.
@@ -45,56 +40,34 @@ This recipe supports the following options:
 **version**
    The version of the application. Default: 1.0.0
 
-**source**
-   Location of the source folder copied into the image. This option is not used it ``git-url`` is present. Default is ".".
+**hostname**
+   The hostname of the docker container. Default: localhost
 
-**git-url**
-   GitHub URL pointing to the source repo. The sources are copied into the image. Default: None.
+**http-port**
+   The HTTP port of the app service. Default: 8094
 
-**git-branch**
-   Branch of the source repo on GitHub. Default: ``master``.
+**https-port**
+   The HTTPS port of the app service. Default: 28094
 
-**subdir**
-  The location of the ``buildout.cfg`` file used to build. Default: None. 
-   
-**buildout-cfg**
-  Path to a local ``buildout.cfg`` which is copied into the sources. Default: None.  
+**output-port**
+   The WPS output port of the wps apps service. Default: 38094
 
-**expose**
-   List of exposed ports.
-
-**command**
-   Command to start service. Default: ``make update-config update-user start``
-
-**environment**
-   List of key=value pairs added as ENV parameters in the Dockerfile.
-
-**settings**
-   List of key=value pairs added to the buildout ``[settings]`` section of a custom.cfg used in the Dockerfile.
-
-**buildout-options**
-   List of key=value pairs added to the ``[buildout]`` section of a custom.cfg used in the Dockerfile.
 
 Example usage
 =============
 
-The following example ``buildout.cfg`` generates a Dockerfile for Ubuntu 14.04:
+The following example ``buildout.cfg`` generates a Dockerfile:
 
-.. code-block:: ini 
+.. code-block:: ini
 
   [buildout]
   parts = docker
 
   [docker]
   recipe = birdhousebuilder.recipe.docker
-  image-name = ubuntu
-  image-version = 14.04
+  app = emu
   maintainer = Birdhouse
-  description = My Birdhouse App
-  expose = 8090 8094
-  environment =
-       OUTPUT_PORT=8090
-
-
-
-
+  description = Emu WPS Application
+  version = 0.5.0
+  http-port = 8094
+  output-port = 38094

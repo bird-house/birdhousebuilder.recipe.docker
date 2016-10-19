@@ -1,6 +1,13 @@
 Changes
 *******
 
+0.5.0 (2016-10-19)
+==================
+
+* update recipe to buildout deployment.
+* simplified Dockerfile.
+* removed custom.cfg template.
+
 0.4.8 (2015-12-23)
 ==================
 
