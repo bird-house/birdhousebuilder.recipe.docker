@@ -7,7 +7,7 @@ from setuptools import setup
 
 name = 'birdhousebuilder.recipe.docker'
 
-version = '0.5.0'
+version = '0.5.1'
 description = 'A Buildout recipe to generate a Dockerfile for Birdhouse applications.'
 long_description = (
     open('README.rst').read() + '\n' +
