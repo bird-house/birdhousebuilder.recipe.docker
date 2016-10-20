@@ -1,6 +1,11 @@
 Changes
 *******
 
+0.5.1 (2016-10-20)
+==================
+
+* fix folder permissions of etc/ and var/run/ in Dockerfile.
+
 0.5.0 (2016-10-19)
 ==================
 
