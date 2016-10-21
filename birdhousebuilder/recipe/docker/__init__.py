@@ -3,12 +3,14 @@
 """Recipe docker"""
 
 import os
+import shutil
 from mako.template import Template
 
 import logging
 logger = logging.getLogger(__name__)
 
-templ_dockerignore = Template(filename=os.path.join(os.path.dirname(__file__), "dot_dockerignore"))
+file_dockerignore = os.path.join(os.path.dirname(__file__), "dot_dockerignore")
+templ_dockerenv = Template(filename=os.path.join(os.path.dirname(__file__), "dot_env"))
 templ_dockerfile = Template(filename=os.path.join(os.path.dirname(__file__), "Dockerfile"))
 
 
@@ -26,19 +28,26 @@ class Recipe(object):
         self.options['vendor'] = options.get('vendor', 'Birdhouse')
         self.options['version'] = options.get('version', '1.0.0')
         self.options['hostname'] = options.get('hostname', 'localhost')
-        self.options['http_port'] = self.options['http-port'] = options.get('http-port', '8094')
-        self.options['https_port'] = self.options['https-port'] = options.get('https-port', '28094')
-        self.options['output_port'] = self.options['output-port'] = options.get('output-port', '38094')
+        self.options['supervisor_port'] = self.options['supervisor-port'] = options.get('supervisor-port', '9001')
+        self.options['http_port'] = self.options['http-port'] = options.get('http-port', '8080')
+        self.options['https_port'] = self.options['https-port'] = options.get('https-port', '8443')
+        self.options['output_port'] = self.options['output-port'] = options.get('output-port', '8000')
 
     def install(self):
         installed = []
         installed += list(self.install_dockerignore())
+        installed += list(self.install_dockerenv())
         installed += list(self.install_dockerfile())
         return installed
 
     def install_dockerignore(self):
-        result = templ_dockerignore.render(**self.options)
         output = os.path.join(self.buildout_dir, '.dockerignore')
+        shutil.copy2(file_dockerignore, output)
+        return tuple()
+
+    def install_dockerenv(self):
+        result = templ_dockerenv.render(**self.options)
+        output = os.path.join(self.buildout_dir, '.env')
 
         try:
             os.remove(output)
