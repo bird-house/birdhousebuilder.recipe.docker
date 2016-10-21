@@ -44,13 +44,13 @@ This recipe supports the following options:
    The hostname of the docker container. Default: localhost
 
 **http-port**
-   The HTTP port of the app service. Default: 8094
+   The HTTP port of the app service. Default: 8080
 
 **https-port**
-   The HTTPS port of the app service. Default: 28094
+   The HTTPS port of the app service. Default: 8443
 
 **output-port**
-   The WPS output port of the wps apps service. Default: 38094
+   The WPS output port of the wps apps service. Default: 8000
 
 
 Example usage
@@ -69,5 +69,6 @@ The following example ``buildout.cfg`` generates a Dockerfile:
   maintainer = Birdhouse
   description = Emu WPS Application
   version = 0.5.0
+  hostname = emu-demo.local
   http-port = 8094
   output-port = 38094
