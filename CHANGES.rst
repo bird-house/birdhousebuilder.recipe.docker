@@ -1,6 +1,16 @@
 Changes
 *******
 
+0.5.3 (2017-05-11)
+==================
+
+* added volume for etc/ in Dockerfile.
+
+0.5.2 (2016-10-21)
+==================
+
+* changed default ports, generate .env file for docker-compose
+
 0.5.1 (2016-10-20)
 ==================
 
